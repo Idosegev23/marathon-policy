@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>הרשמה למרתון Gen-z</title>
+    <title>מדיניות הרשמה, ביטולים ותקנון - מרתון אנגלית</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,22 +46,22 @@
                         
                         <div class="space-y-4 text-lg text-darker leading-relaxed">
                             <p>• ההרשמה היא מראש עבור כל ששת המפגשים.</p>
-                            <p>• ביטול עד 7 ימים לפני תחילת המפגשים – יינתן החזר מלא.</p>
-                            <p>• ביטול פחות מ-7 ימים לפני תחילת המרתון – יינתן החזר של 50%.</p>
-                            <p>• לאחר תחילת המפגשים – לא יתאפשר החזר כספי.</p>
+                            <p>• <strong>ביטול עד 7 ימים לפני תחילת המפגשים – יינתן החזר מלא.</strong></p>
+                            <p>• <strong>ביטול פחות מ-7 ימים לפני תחילת המרתון – יינתן החזר של 50%.</strong></p>
+                            <p>• <strong>לאחר תחילת המפגשים – לא יתאפשר החזר כספי.</strong></p>
                             <p>• היעדרות ממפגש בודד אינה מזכה בהחזר, אך יועבר סיכום אישי ודפי תרגול.</p>
                             <p>• במידה ומשתתף נעדר ממפגש וירצה להשלים בקבוצה אחרת – הדבר יתאפשר רק במידה ויתפנה מקום, ואין בכך התחייבות.</p>
                             <p>• הרשמה מותנית בגיבוש קבוצה של 5 משתתפים. אם לא תתגבש קבוצה – יינתן החזר כספי מלא לנרשמים.</p>
                         </div>
                     </div>
 
-                    <!-- זכויות יוצרים -->
-                    <div class="bg-white/80 backdrop-blur-sm rounded-5xl p-8 shadow-soft mb-16 border-2 border-pastel-blue/20">
+                    <!-- תקנון -->
+                    <div class="bg-white/80 backdrop-blur-sm rounded-5xl p-8 shadow-soft mb-16 border-2 border-pastel-blue/20" id="terms-section">
                         <div class="flex items-center mb-6">
                             <div class="w-12 h-12 bg-pastel-blue/20 rounded-full flex items-center justify-center mr-4">
-                                <span class="text-2xl">©</span>
+                                <span class="text-2xl">📋</span>
                             </div>
-                            <h3 class="text-2xl font-black text-pastel-blue">זכויות יוצרים</h3>
+                            <h3 class="text-2xl font-black text-pastel-blue">תקנון</h3>
                         </div>
                         
                         <div class="space-y-8">
@@ -108,20 +108,10 @@
                         </div>
 
                         <div class="text-center mb-8">
-                            <div id="desktop-message" class="desktop-only mb-6">
-                                <p class="text-lg bg-white/20 rounded-2xl p-4 mb-6">
-                                    על מנת להמשיך בתשלום, אנא פתחו דף זה מהטלפון הנייד
-                                </p>
-                            </div>
-                            
-                            <div id="mobile-payment" class="mobile-only">
-                                <a href="https://link.payboxapp.com/YxVFpnKu4ZjmG9r16" 
-                                   id="payboxLink" 
-                                   class="payment-link disabled bg-white/30 text-white/50 py-4 px-8 rounded-3xl text-xl font-bold mb-4 inline-block w-full max-w-sm mx-auto">
-                                    <span class="inline-block w-6 h-6 mr-2 bg-white/20 rounded" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMiA5TDE0IDE3TDEzIDIwTDEyIDJaIiBmaWxsPSJjdXJyZW50Q29sb3IiLz4KPC9zdmc+'); background-size: contain; background-repeat: no-repeat; background-position: center;"></span>
-                                    תשלום דרך PayBox
-                                </a>
-                            </div>
+                            <button id="proceedToPayment" 
+                                    class="payment-proceed-btn disabled bg-white/30 text-white/50 py-4 px-8 rounded-3xl text-xl font-bold mb-4 inline-block w-full max-w-sm mx-auto cursor-not-allowed">
+                                להמשך תשלום
+                            </button>
                         </div>
 
                         <div class="text-center">
@@ -139,6 +129,82 @@
         </section>
     </main>
 
+    <!-- פופאפ טופס תשלום -->
+    <div id="paymentModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="text-2xl font-black text-darker mb-2">פרטים להמשך תשלום</h3>
+                <p class="text-lg text-darker/70 mb-6">אנא מלאו את הפרטים הבאים להמשך התהליך</p>
+                <button id="closeModal" class="modal-close">&times;</button>
+            </div>
+            
+            <form id="paymentForm" class="modal-body">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="firstName">
+                            <span class="form-icon">👤</span>
+                            שם פרטי
+                        </label>
+                        <input type="text" id="firstName" name="firstName" required placeholder="הכניסו את השם הפרטי">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lastName">
+                            <span class="form-icon">👤</span>
+                            שם משפחה
+                        </label>
+                        <input type="text" id="lastName" name="lastName" required placeholder="הכניסו את שם המשפחה">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">
+                        <span class="form-icon">📱</span>
+                        נייד
+                    </label>
+                    <input type="tel" id="phone" name="phone" required placeholder="050-1234567">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">
+                        <span class="form-icon">📧</span>
+                        כתובת מייל
+                    </label>
+                    <input type="email" id="email" name="email" required placeholder="example@email.com">
+                </div>
+                
+                <div class="form-note">
+                    <div class="note-icon">💳</div>
+                    <p>הפרטים הללו יופיעו בקבלה שתישלח אליכם</p>
+                </div>
+                
+                <div class="checkboxes-container">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="policyCheck" name="policyCheck" required>
+                        <label for="policyCheck">
+                            אני מאשר/ת שקראתי ומסכים/ה ל
+                            <a href="#" id="viewPolicy" class="policy-link">מדיניות ביטולים</a>
+                        </label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="termsCheck" name="termsCheck" required>
+                        <label for="termsCheck">
+                            אני מאשר/ת שקראתי ומסכים/ה ל
+                            <a href="#" id="viewTerms" class="policy-link">תקנון</a>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="payment-section">
+                    <button type="button" id="paymentLink" class="payment-final-btn disabled">
+                        מעבר לתשלום
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         // זיהוי מכשיר
         function isMobileDevice() {
@@ -146,53 +212,197 @@
                    window.innerWidth <= 768;
         }
 
-        // הפעלה/השבתה של לינק התשלום
-        function togglePaymentLink() {
+        // הפעלה/השבתה של כפתור המשך תשלום
+        function toggleProceedButton() {
             const checkbox = document.getElementById('readConfirmation');
-            const payboxLink = document.getElementById('payboxLink');
+            const proceedBtn = document.getElementById('proceedToPayment');
             
             if (checkbox.checked) {
-                payboxLink.classList.remove('disabled');
-                payboxLink.classList.add('enabled');
-                payboxLink.style.backgroundColor = '#4CAF50';
-                payboxLink.style.color = 'white';
-                payboxLink.style.pointerEvents = 'auto';
+                proceedBtn.classList.remove('disabled');
+                proceedBtn.classList.add('enabled');
+                proceedBtn.style.backgroundColor = '#4CAF50';
+                proceedBtn.style.color = 'white';
+                proceedBtn.style.cursor = 'pointer';
+                proceedBtn.disabled = false;
             } else {
-                payboxLink.classList.add('disabled');
-                payboxLink.classList.remove('enabled');
-                payboxLink.style.backgroundColor = 'rgba(255,255,255,0.3)';
-                payboxLink.style.color = 'rgba(255,255,255,0.5)';
-                payboxLink.style.pointerEvents = 'none';
+                proceedBtn.classList.add('disabled');
+                proceedBtn.classList.remove('enabled');
+                proceedBtn.style.backgroundColor = 'rgba(255,255,255,0.3)';
+                proceedBtn.style.color = 'rgba(255,255,255,0.5)';
+                proceedBtn.style.cursor = 'not-allowed';
+                proceedBtn.disabled = true;
+            }
+        }
+
+        // פתיחת המודל
+        function openPaymentModal() {
+            const modal = document.getElementById('paymentModal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // סגירת המודל
+        function closePaymentModal() {
+            const modal = document.getElementById('paymentModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // בדיקת תקינות הטופס והפעלת כפתור התשלום
+        function validateForm() {
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const policyCheck = document.getElementById('policyCheck').checked;
+            const termsCheck = document.getElementById('termsCheck').checked;
+            const paymentBtn = document.getElementById('paymentLink');
+            
+            const isFormValid = firstName && lastName && phone && email && policyCheck && termsCheck;
+            
+            if (isFormValid) {
+                paymentBtn.classList.remove('disabled');
+                paymentBtn.disabled = false;
+                paymentBtn.style.backgroundColor = '#4CAF50';
+                paymentBtn.style.color = 'white';
+                paymentBtn.style.cursor = 'pointer';
+            } else {
+                paymentBtn.classList.add('disabled');
+                paymentBtn.disabled = true;
+                paymentBtn.style.backgroundColor = '#ccc';
+                paymentBtn.style.color = '#666';
+                paymentBtn.style.cursor = 'not-allowed';
+            }
+        }
+
+        // שליחת וובהוק
+        async function sendWebhook(formData) {
+            const webhookData = {
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                phone: formData.phone,
+                email: formData.email,
+                policyAgreed: formData.policyCheck,
+                termsAgreed: formData.termsCheck,
+                timestamp: new Date().toISOString(),
+                source: 'policy-site'
+            };
+
+            try {
+                await fetch('https://hook.eu2.make.com/vty0bsab92etx8ctno6axd5pb2i89niv', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(webhookData)
+                });
+            } catch (error) {
+                console.error('שגיאה בשליחת וובהוק:', error);
+            }
+        }
+
+        // מעבר לתשלום
+        async function proceedToPayment() {
+            const formData = {
+                firstName: document.getElementById('firstName').value.trim(),
+                lastName: document.getElementById('lastName').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                policyCheck: document.getElementById('policyCheck').checked,
+                termsCheck: document.getElementById('termsCheck').checked
+            };
+
+            // שליחת וובהוק
+            await sendWebhook(formData);
+
+            // פתיחת אפליקציית התשלום
+            const paymentUrl = 'https://link.payboxapp.com/YxVFpnKu4ZjmG9r16';
+            
+            if (isMobileDevice()) {
+                // במובייל - ניסיון לפתוח את האפליקציה
+                window.location.href = paymentUrl;
+            } else {
+                // בדסקטופ - פתיחה בחלון חדש
+                window.open(paymentUrl, '_blank');
             }
         }
 
         // טעינת הדף
         window.addEventListener('DOMContentLoaded', function() {
-            const desktopMessage = document.getElementById('desktop-message');
-            const mobilePayment = document.getElementById('mobile-payment');
             const checkbox = document.getElementById('readConfirmation');
+            const proceedBtn = document.getElementById('proceedToPayment');
+            const closeModalBtn = document.getElementById('closeModal');
+            const modal = document.getElementById('paymentModal');
+            const paymentBtn = document.getElementById('paymentLink');
             
-            // הצגת הודעה מתאימה לפי מכשיר
-            if (isMobileDevice()) {
-                desktopMessage.style.display = 'none';
-                mobilePayment.style.display = 'block';
-            } else {
-                desktopMessage.style.display = 'block';
-                mobilePayment.style.display = 'none';
-            }
+            // האזנה לשינוי בצ'קבוקס הראשי
+            checkbox.addEventListener('change', toggleProceedButton);
             
-            // האזנה לשינוי בצ'קבוקס
-            checkbox.addEventListener('change', togglePaymentLink);
+            // האזנה לכפתור המשך תשלום
+            proceedBtn.addEventListener('click', function() {
+                if (!this.disabled) {
+                    openPaymentModal();
+                }
+            });
+            
+            // האזנה לסגירת המודל
+            closeModalBtn.addEventListener('click', closePaymentModal);
+            
+            // סגירת המודל בלחיצה על הרקע
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closePaymentModal();
+                }
+            });
+            
+            // האזנה לשינויים בטופס
+            const formInputs = ['firstName', 'lastName', 'phone', 'email', 'policyCheck', 'termsCheck'];
+            formInputs.forEach(inputId => {
+                const element = document.getElementById(inputId);
+                element.addEventListener('input', validateForm);
+                element.addEventListener('change', validateForm);
+            });
+            
+            // האזנה לכפתור התשלום הסופי
+            paymentBtn.addEventListener('click', function() {
+                if (!this.disabled) {
+                    proceedToPayment();
+                }
+            });
+            
+            // האזנה לקישור מדיניות ביטולים
+            const viewPolicyLink = document.getElementById('viewPolicy');
+            viewPolicyLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                closePaymentModal();
+                // גלילה למדיניות ביטולים
+                const policySection = document.querySelector('.bg-white\\/80.backdrop-blur-sm.rounded-5xl');
+                if (policySection) {
+                    policySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+            
+            // האזנה לקישור תקנון
+            const viewTermsLink = document.getElementById('viewTerms');
+            viewTermsLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                closePaymentModal();
+                // גלילה לתקנון
+                const termsSection = document.getElementById('terms-section');
+                if (termsSection) {
+                    termsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
             
             // הפעלה ראשונית
-            togglePaymentLink();
+            toggleProceedButton();
+            validateForm();
         });
 
-        // מניעת לחיצה על לינק כשהוא לא מופעל
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('disabled')) {
-                e.preventDefault();
-                return false;
+        // סגירת המודל בלחיצה על ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePaymentModal();
             }
         });
     </script>
