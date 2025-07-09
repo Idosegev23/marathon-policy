@@ -161,7 +161,7 @@ p {
 }
 
 /* כפתורים */
-.payment-link {
+.payment-link, .payment-proceed-btn, .payment-final-btn {
   display: inline-block;
   text-decoration: none;
   border-radius: 1.5rem;
@@ -169,21 +169,335 @@ p {
   text-align: center;
   transition: all 0.3s ease;
   cursor: pointer;
+  border: none;
+  font-family: 'Rubik', sans-serif;
 }
 
-.payment-link.disabled {
+.payment-link.disabled, .payment-proceed-btn.disabled, .payment-final-btn.disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
 
-.payment-link.enabled {
+.payment-link.enabled, .payment-proceed-btn.enabled, .payment-final-btn:not(.disabled) {
   background-color: #4CAF50 !important;
   color: white !important;
   box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
 }
 
-.payment-link.enabled:hover {
+.payment-link.enabled:hover, .payment-proceed-btn.enabled:hover, .payment-final-btn:not(.disabled):hover {
   background-color: #45a049 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+}
+
+/* סטיילינג למודל */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(250, 171, 153, 0.8), rgba(177, 198, 229, 0.8));
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #ffffff, #fefefe);
+  border-radius: 2rem;
+  max-width: 550px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.2);
+  animation: slideUp 0.4s ease;
+  border: 2px solid rgba(250, 171, 153, 0.1);
+}
+
+.modal-header {
+  padding: 2rem 2rem 1rem;
+  text-align: center;
+  position: relative;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #666;
+  line-height: 1;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.modal-body {
+  padding: 2rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  color: var(--text-black);
+  font-size: 1rem;
+  gap: 0.5rem;
+}
+
+.form-icon {
+  font-size: 1.2rem;
+  display: inline-block;
+  width: 24px;
+  text-align: center;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 2px solid #E2E8F0;
+  border-radius: 1rem;
+  font-size: 1rem;
+  font-family: 'Rubik', sans-serif;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(135deg, #ffffff, #fafafa);
+  color: var(--text-black);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.form-group input::placeholder {
+  color: #a0a0a0;
+  font-style: italic;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(232, 90, 79, 0.1), 0 4px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  background: white;
+}
+
+.form-group input:valid:not(:placeholder-shown) {
+  border-color: #22c55e;
+  background: linear-gradient(135deg, #f0fdf4, #ffffff);
+}
+
+.form-group input:invalid:not(:focus):not(:placeholder-shown) {
+  border-color: #ef4444;
+  background: linear-gradient(135deg, #fef2f2, #ffffff);
+}
+
+.form-note {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(194, 239, 221, 0.3), rgba(177, 198, 229, 0.2));
+  border-radius: 1rem;
+  text-align: center;
+  border: 1px solid rgba(194, 239, 221, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.note-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.form-note p {
+  margin: 0;
+  color: var(--text-black);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.checkboxes-container {
+  margin: 2rem 0;
+  space-y: 1rem;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(255, 221, 134, 0.15), rgba(255, 192, 218, 0.15));
+  border-radius: 1rem;
+  border: 2px solid rgba(250, 171, 153, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.checkbox-group::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--pastel-coral), var(--pastel-pink));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.checkbox-group:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border-color: rgba(250, 171, 153, 0.4);
+}
+
+.checkbox-group:hover::before {
+  opacity: 1;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+  border-radius: 0.375rem;
+  border: 2px solid #d1d5db;
+  background: white;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.checkbox-group input[type="checkbox"]:checked {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  border-color: var(--primary);
+}
+
+.checkbox-group input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.checkbox-group label {
+  flex: 1;
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-black);
+  margin: 0;
+  font-weight: 500;
+}
+
+.policy-link {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.policy-link:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  text-shadow: 0 0 8px rgba(232, 90, 79, 0.3);
+}
+
+#viewPolicy::after {
+  content: ' ↗';
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+#viewTerms::after {
+  content: ' 📋';
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.payment-section {
+  margin-top: 2rem;
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid #E2E8F0;
+}
+
+.payment-final-btn {
+  width: 100%;
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  border-radius: 1rem;
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  transition: all 0.3s ease;
+}
+
+.payment-final-btn:not(.disabled) {
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+.payment-final-btn:not(.disabled):hover {
+  background-color: #45a049;
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
 }
@@ -369,6 +683,73 @@ p {
   
   label {
     cursor: pointer;
+    font-size: 1rem;
+  }
+
+  /* תיקונים למובייל */
+  .modal-content {
+    margin: 0.5rem;
+    max-height: 95vh;
+    border-radius: 1.5rem;
+  }
+  
+  .modal-header {
+    padding: 1.5rem 1.5rem 1rem;
+  }
+  
+  .modal-body {
+    padding: 1.5rem;
+  }
+  
+  .modal-close {
+    top: 0.75rem;
+    right: 1rem;
+    width: 35px;
+    height: 35px;
+    font-size: 1.5rem;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+  
+  .form-group input {
+    font-size: 16px; /* למניעת זום במובייל */
+    padding: 0.875rem 1rem;
+  }
+  
+  .checkbox-group {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .checkbox-group label {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+  
+  .form-note {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .note-icon {
+    font-size: 1.2rem;
+  }
+  
+  .form-note p {
+    font-size: 0.8rem;
+  }
+  
+  .payment-final-btn {
+    padding: 0.875rem 1.5rem;
     font-size: 1rem;
   }
 }
