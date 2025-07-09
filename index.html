@@ -26,7 +26,7 @@
         </nav>
     </header>
 
-    <main class="pt-24 bg-gradient-to-br from-pastel-yellow/20 via-white to-pastel-blue/25 min-h-screen">
+    <main class="pt-28 bg-gradient-to-br from-pastel-yellow/20 via-white to-pastel-blue/25 min-h-screen">
         <section class="py-20">
             <div class="container-center">
                 <div class="text-center mb-16">
@@ -258,7 +258,18 @@
             const termsCheck = document.getElementById('termsCheck').checked;
             const paymentBtn = document.getElementById('paymentLink');
             
-            const isFormValid = firstName && lastName && phone && email && policyCheck && termsCheck;
+            // וולידציה מתקדמת
+            const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            const isValidPhone = /^05\d{8}$/.test(phone.replace(/\D/g, ''));
+            const isValidName = firstName.length >= 2 && lastName.length >= 2;
+            
+            const isFormValid = isValidName && isValidPhone && isValidEmail && policyCheck && termsCheck;
+            
+            // וולידציה ויזואלית לכל שדה
+            updateFieldValidation('firstName', firstName.length >= 2);
+            updateFieldValidation('lastName', lastName.length >= 2);
+            updateFieldValidation('phone', isValidPhone);
+            updateFieldValidation('email', isValidEmail);
             
             if (isFormValid) {
                 paymentBtn.classList.remove('disabled');
@@ -272,6 +283,26 @@
                 paymentBtn.style.backgroundColor = '#ccc';
                 paymentBtn.style.color = '#666';
                 paymentBtn.style.cursor = 'not-allowed';
+            }
+        }
+
+        // עדכון סטיילינג לפי תקינות השדה
+        function updateFieldValidation(fieldId, isValid) {
+            const field = document.getElementById(fieldId);
+            const value = field.value.trim();
+            
+            if (value === '') {
+                // שדה ריק - לא נראה שגיאה
+                field.style.borderColor = '#E2E8F0';
+                field.style.background = 'linear-gradient(135deg, #ffffff, #fafafa)';
+            } else if (isValid) {
+                // שדה תקין
+                field.style.borderColor = '#22c55e';
+                field.style.background = 'linear-gradient(135deg, #f0fdf4, #ffffff)';
+            } else {
+                // שדה לא תקין
+                field.style.borderColor = '#ef4444';
+                field.style.background = 'linear-gradient(135deg, #fef2f2, #ffffff)';
             }
         }
 
@@ -355,12 +386,19 @@
                 }
             });
             
-            // האזנה לשינויים בטופס
+            // האזנה לשינויים בטופס עם וולידציה מיידית
             const formInputs = ['firstName', 'lastName', 'phone', 'email', 'policyCheck', 'termsCheck'];
             formInputs.forEach(inputId => {
                 const element = document.getElementById(inputId);
-                element.addEventListener('input', validateForm);
-                element.addEventListener('change', validateForm);
+                element.addEventListener('input', function() {
+                    validateForm();
+                });
+                element.addEventListener('change', function() {
+                    validateForm();
+                });
+                element.addEventListener('blur', function() {
+                    validateForm();
+                });
             });
             
             // האזנה לכפתור התשלום הסופי
