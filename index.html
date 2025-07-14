@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מדיניות הרשמה, ביטולים ותקנון - מרתון אנגלית</title>
+    <title>מדיניות ביטולים ותקנון - מרתון GEN-Z</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,7 +30,7 @@
         <section class="py-20">
             <div class="container-center">
                 <div class="text-center mb-16">
-                    <h2 class="text-4xl md:text-6xl font-black mb-8 text-pastel-coral">מדיניות ביטולים וזכויות יוצרים</h2>
+                    <h2 class="text-4xl md:text-6xl font-black mb-8 text-pastel-coral">מדיניות ביטולים ותקנון</h2>
                     <p class="text-xl text-darker mb-8">אנא קרא/י בעיון את המדיניות הבאה לפני הרשמה למרתון</p>
                 </div>
 
@@ -173,6 +173,18 @@
                     <input type="email" id="email" name="email" required placeholder="example@email.com">
                 </div>
                 
+                <div class="form-group">
+                    <label for="group">
+                        <span class="form-icon">👥</span>
+                        קבוצה
+                    </label>
+                    <select id="group" name="group" required>
+                        <option value="">בחר/י קבוצה</option>
+                        <option value="grade7">עולים לכיתה ז׳</option>
+                        <option value="grade6">עולים לכיתה ו׳</option>
+                    </select>
+                </div>
+                
                 <div class="form-note">
                     <div class="note-icon">💳</div>
                     <p>הפרטים הללו יופיעו בקבלה שתישלח אליכם</p>
@@ -254,6 +266,7 @@
             const lastName = document.getElementById('lastName').value.trim();
             const phone = document.getElementById('phone').value.trim();
             const email = document.getElementById('email').value.trim();
+            const group = document.getElementById('group').value;
             const policyCheck = document.getElementById('policyCheck').checked;
             const termsCheck = document.getElementById('termsCheck').checked;
             const paymentBtn = document.getElementById('paymentLink');
@@ -263,13 +276,14 @@
             const isValidPhone = /^05\d{8}$/.test(phone.replace(/\D/g, ''));
             const isValidName = firstName.length >= 2 && lastName.length >= 2;
             
-            const isFormValid = isValidName && isValidPhone && isValidEmail && policyCheck && termsCheck;
+            const isFormValid = isValidName && isValidPhone && isValidEmail && group && policyCheck && termsCheck;
             
             // וולידציה ויזואלית לכל שדה
             updateFieldValidation('firstName', firstName.length >= 2);
             updateFieldValidation('lastName', lastName.length >= 2);
             updateFieldValidation('phone', isValidPhone);
             updateFieldValidation('email', isValidEmail);
+            updateFieldValidation('group', group !== '');
             
             if (isFormValid) {
                 paymentBtn.classList.remove('disabled');
@@ -313,6 +327,7 @@
                 lastName: formData.lastName,
                 phone: formData.phone,
                 email: formData.email,
+                group: formData.group,
                 policyAgreed: formData.policyCheck,
                 termsAgreed: formData.termsCheck,
                 timestamp: new Date().toISOString(),
@@ -339,6 +354,7 @@
                 lastName: document.getElementById('lastName').value.trim(),
                 phone: document.getElementById('phone').value.trim(),
                 email: document.getElementById('email').value.trim(),
+                group: document.getElementById('group').value,
                 policyCheck: document.getElementById('policyCheck').checked,
                 termsCheck: document.getElementById('termsCheck').checked
             };
@@ -387,7 +403,7 @@
             });
             
             // האזנה לשינויים בטופס עם וולידציה מיידית
-            const formInputs = ['firstName', 'lastName', 'phone', 'email', 'policyCheck', 'termsCheck'];
+            const formInputs = ['firstName', 'lastName', 'phone', 'email', 'group', 'policyCheck', 'termsCheck'];
             formInputs.forEach(inputId => {
                 const element = document.getElementById(inputId);
                 element.addEventListener('input', function() {
